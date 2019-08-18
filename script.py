@@ -52,18 +52,12 @@ def trans_union(letter, states):
         return list(final)
 
 
-def get_bin(x):
-    return int(format(x, 'b'))
-
-
 class State:
     def __init__(self, name, func=[], automata='dfa'):
         if automata == 'dfa':
             self.name = set(name)
-            self.bin = get_bin(len(dfa))
         else:
             self.name = name
-            self.bin = get_bin(len(nfa))
         self.In = []
         self.Out = []
         self.transitions = {}
@@ -155,7 +149,6 @@ def State_reduction():
             empty.put(state)
 
     while (not empty.empty()):
-        # print("\r" + str(empty.qsize()), end=" ")
         state = empty.get()
         if state in dfa and state != fz([inp["start"]]):
             inn = dfa[state].In
@@ -174,10 +167,7 @@ def Generate_output(reduce=0):
     for s in dfa:
         for let, trans in dfa[s].transitions.items():
             out["t_func"].append([list(dfa[s].name), let, list(dfa[trans].name)])
-            # out["t_func"].append([dfa[s].bin, let, dfa[trans].bin])
     out["states"] = len(dfa)
-    # out["start"] = dfa[fz([out["start"]])].bin
-    # out["final"] = [dfa[fz(x)].bin for x in out["final"]]
 
 
 def Print_Table():
@@ -189,13 +179,6 @@ def Print_Table():
         row.append(".     .     .     .     .     .")
         table.append(row)
     print(tabulate(table, headers=[""] + [x for x in ["State"] + inp["letters"]] + [""]))
-    # for i in [x+'\t\t' for x in ["State"] + inp["letters"]]:
-    #     print(i, end="")
-    # print('\n')
-    # for i in table:
-    #     for j in i:
-    #         print(j, '\t\t', end="")
-    #     print('\n')
 
 
 def nfa_run(In, curr_state=inp["start"]):
@@ -224,23 +207,8 @@ def dfa_run(In):
         return True
     else:
         return False
-
-
-State_construction()
-Transition_construction()
-Generate_output()
-print("\nRAW Table:")
-Print_Table()
-
-file = open("output.json", 'w')
-json.dump(out, file, indent=2)
-file.close()
-
-State_reduction()
-print("\nFinal Table:")
-Print_Table()
-
-
+    
+    
 def testNFA_DFA():
     number = int(input("How many inputs? "))
     while(number):
@@ -256,3 +224,19 @@ def testNFA_DFA():
             print("Not Accepted by DFA!")
 
         number = number - 1
+
+
+State_construction()
+Transition_construction()
+Generate_output()
+print("\nRAW Table:")
+Print_Table()
+
+file = open("output.json", 'w')
+json.dump(out, file, indent=2)
+file.close()
+
+State_reduction()
+print("\nFinal Table:")
+Print_Table()
+# testNFA_DFA()
