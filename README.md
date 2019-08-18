@@ -16,3 +16,4 @@ A Python Script to convert an NFA (without epsilon transitions) to DFA
 > ![Sample Output](https://user-images.githubusercontent.com/43738980/63222041-9c7f1800-c1bf-11e9-98e9-a4190e54eaf7.png)
 + To test the NFA and created DFA on some input strings, uncomment line 242 in the script:
 `# testNFA_DFA()`
++ To know about the working of the script, refer to report.pdf
